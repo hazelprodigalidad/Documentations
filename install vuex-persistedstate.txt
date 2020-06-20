@@ -1,0 +1,74 @@
+install vuex-persistedstate
+
+yarn add vuex-persistedstate
+
+store.js
+=========
+import createPersistedState from "vuex-persistedstate"; //<<----
+ 
+const store = new Vuex.Store({
+  // ...
+  plugins: [createPersistedState()],
+   state: {   //<<----
+    userInfo: {},
+    fileInfo:{},
+  },
+  mutations: {  //<<----
+    USER_INFO: (state, val) => {
+      state.userInfo = val
+    },
+    FILE_INFO: (state, val) => {
+      state.fileInfo = val
+    }
+   
+  },
+});
+
+
+
+
+
+
+
+===================================
+ADD MY Plugins
+
+create myPlugins.js on src/plugins/myPlugins.js
+
+import { mapState } from 'vuex' //<<------
+
+const myPlugin = {
+    install(Vue){
+        Vue.mixin({
+            data: () => ({
+
+            }),
+            methods: {
+
+            },
+            computed:{
+                ...mapState([
+                    'FILE_INFO' //<<---------
+                ])
+
+            },
+            created(){
+
+            }
+        })
+    }
+}
+
+export default myPlugin 
+
+
+
+main.js
+===================
+import myPlugin from './plugins/myPlugins'
+
+Vue.use(myPlugin)
+
+
+
+
